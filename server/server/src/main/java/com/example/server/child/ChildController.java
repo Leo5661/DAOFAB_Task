@@ -1,4 +1,4 @@
-package com.example.server.parent;
+package com.example.server.child;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/parent")
-public class ParentController {
+@RequestMapping(path = "api/v1/child")
+public class ChildController {
 
     @Autowired
-    private final ParentService parentService;
+    private final ChildService childService;
 
-    public ParentController(ParentService parentService){
-        this.parentService = parentService;
+    public ChildController(ChildService childService){
+        this.childService = childService;
     }
+
     @GetMapping
-    public List<Parent> getParent() {
-        return parentService.getParent();
+    public List<Child> getChild(){
+        return childService.getChild();
     }
-
 }
