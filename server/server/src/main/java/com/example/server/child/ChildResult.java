@@ -1,44 +1,20 @@
-package com.example.server.parent;
+package com.example.server.child;
 
-import com.example.server.child.Child;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.Formula;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ChildResult {
 
-@Entity(name = "parent")
-@Table
-public class Parent {
-
-    @Id
     private Integer id;
     private String sender;
     private String receiver;
     private Integer totalAmount;
+    private Integer paidAmount;
 
-    @OneToMany(mappedBy = "parent")
-    @JsonManagedReference
-    private List<Child> child = new ArrayList<>();
-
-
-    @Formula(value = "(SELECT SUM(child.paid_amount) FROM child WHERE child.parent_id = id)")
-    private Integer totalPaidAmount;
-
-
-
-    public Parent() {
-    }
-
-    public Parent(Integer id, String sender, String receiver, Integer totalAmount) {
+    public ChildResult(Integer id, String sender, String receiver, Integer totalAmount, Integer paidAmount) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.totalAmount = totalAmount;
+        this.paidAmount = paidAmount;
     }
 
     public Integer getId() {
@@ -65,10 +41,6 @@ public class Parent {
         this.receiver = receiver;
     }
 
-    public List<Child> getChild() {
-        return child;
-    }
-
     public Integer getTotalAmount() {
         return totalAmount;
     }
@@ -77,17 +49,22 @@ public class Parent {
         this.totalAmount = totalAmount;
     }
 
-    public Integer getTotalPaidAmount() {
-        return totalPaidAmount;
+    public Integer getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(Integer paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
     @Override
     public String toString() {
-        return "Parent{" +
+        return "ChildResult{" +
                 "id=" + id +
                 ", sender='" + sender + '\'' +
                 ", receiver='" + receiver + '\'' +
-                ", totalAmount='" + totalAmount + '\'' +
+                ", totalAmount=" + totalAmount +
+                ", paidAmount=" + paidAmount +
                 '}';
     }
 }

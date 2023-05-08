@@ -1,7 +1,7 @@
 package com.example.server.child;
 
 
-import com.example.server.parent.Parent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,14 +9,16 @@ import java.util.List;
 @Service
 public class ChildService {
 
-    public List<Child> getChild() {
-        return List.of(
-                new Child(
-                        1,
-                        1,
-                        20
-                )
-        );
+    @Autowired
+    private final ChildRepository childRepository;
+
+    public ChildService(ChildRepository childRepository){
+        this.childRepository = childRepository;
+    }
+
+    public List<ChildResult> getChild(Integer id) {
+//        return childRepository.findAll();
+        return  childRepository.findChild(id);
     }
 
 }

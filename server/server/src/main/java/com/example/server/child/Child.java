@@ -1,9 +1,29 @@
 package com.example.server.child;
 
+import com.example.server.parent.Parent;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+
+@Entity(name = "child")
+@Table
 public class Child {
+
+    @Id
+    @Column(name = "id")
     private Integer id;
+
+
+    @Column(name = "parent_id")
     private Integer parentId;
+
+    @Column(name = "paid_amount")
     private Integer paidAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "parent")
+    @JsonBackReference
+    private Parent parent;
+
 
     public Child() {
     }
@@ -37,6 +57,11 @@ public class Child {
     public void setPaidAmount(Integer paidAmount) {
         this.paidAmount = paidAmount;
     }
+
+    public Parent getParent() {
+        return parent;
+    }
+
 
     @Override
     public String toString() {

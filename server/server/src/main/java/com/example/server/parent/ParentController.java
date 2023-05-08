@@ -1,14 +1,13 @@
 package com.example.server.parent;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/parent")
+@RequestMapping(path = "api/v1")
 public class ParentController {
 
     @Autowired
@@ -17,9 +16,15 @@ public class ParentController {
     public ParentController(ParentService parentService){
         this.parentService = parentService;
     }
-    @GetMapping
-    public List<Parent> getParent() {
-        return parentService.getParent();
+
+    @GetMapping(path = "/parent/{id}")
+    public Optional
+            <Parent> getParent(@PathVariable Integer id) {
+        return parentService.getParent(id);
     }
 
+    @GetMapping(path = "/parent")
+    public Page<Parent> getParentPaged(@RequestParam(value = "page") Integer page, @RequestParam(value = "limit") Integer limit){
+        return parentService.getParentPaged(page, limit);
+    }
 }
