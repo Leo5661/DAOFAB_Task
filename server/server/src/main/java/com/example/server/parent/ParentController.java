@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1")
+
 public class ParentController {
 
     @Autowired
@@ -18,12 +19,14 @@ public class ParentController {
     }
 
     @GetMapping(path = "/parent/{id}")
+    @CrossOrigin
     public Optional
             <Parent> getParent(@PathVariable Integer id) {
         return parentService.getParent(id);
     }
 
     @GetMapping(path = "/parent")
+    @CrossOrigin
     public Page<Parent> getParentPaged(@RequestParam(value = "page") Integer page, @RequestParam(value = "limit") Integer limit){
         return parentService.getParentPaged(page, limit);
     }
